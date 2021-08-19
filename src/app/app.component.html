@@ -1,3 +1,21 @@
-<h1>Hello world!</h1>
-<button type="button" class="btn btn-primary">Primary</button>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand mr-auto" href="#">Blockchain Polls</a>
+    <button type="button" class="btn btn-secondary" (click)="showForm = !showForm" >Create poll</button>
+</nav>
+
+<section class="jumbotron bg-light text-center">
+  <h1>Polls Rethought</h1>
+  <p class="lead text-muted">Powered by BlockChain™️</p>
+</section>
+
+<app-poll-create *ngIf="showForm"></app-poll-create>
+
+<div class="d-flex">
+  <div class="container poll-list">
+    List
+  </div>
+  <div class="container poll-details">
+    Details
+  </div>
+</div>
 
