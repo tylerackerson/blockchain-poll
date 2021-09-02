@@ -1,0 +1,17 @@
+<div class="card mb-4">
+  <div class="poll-image">
+    <img [src]="image"/>
+  </div>
+  <div class="card-body">
+    <p class="card-text text-truncate font-weight-bold">
+      {{ question }}
+    </p>
+    <div class="d-flex justify-content-between">
+      <small *ngIf="numberOfVotes > 0; else noVotes" class="text-muted">{{ numberOfVotes }} vote(s)</small>
+      <ng-template #noVotes>
+        <small class="text-muted">No votes yet</small>
+      </ng-template>
+      <small *ngIf="voted" class="badge alert-success">voted</small>
+    </div>
+  </div>
+</div>
