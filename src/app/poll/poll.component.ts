@@ -9,7 +9,7 @@ export class PollComponent implements OnInit {
 
   @Input() question: string;
   @Input() image: string;
-  @Input() votes: number[];
+  @Input() results: number[];
   @Input() voted: boolean;
 
   numberOfVotes: number;
@@ -17,7 +17,7 @@ export class PollComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.numberOfVotes = this.votes.reduce((acc, curr) => acc += curr, 0);
+    this.numberOfVotes = this.results.reduce((acc, curr) => acc += curr, 0);
   }
 
 }

@@ -3,7 +3,8 @@ export interface Poll {
   question: string, // what's your favorite color?
   results: number[],// counts [0, 2, 3, 0, 3, 9]
   options: string[], // [red, green, blue, orange, purple, yellow]
-  thumbnail: string // http:///<link-to-image>
+  image: string // http:///<link-to-image>
+  voted: boolean
 }
 
 export interface Voter {

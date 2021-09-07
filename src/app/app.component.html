@@ -13,14 +13,22 @@
 <div class="d-flex">
   <div class="container poll-list">
     <app-poll *ngFor="let poll of polls"
+      [id]="poll.id"
       [question]="poll.question"
       [image]="poll.image"
-      [votes]="poll.votes"
+      [results]="poll.results"
       [voted]="poll.voted"
+      (click)="setActivePoll(poll)"
     ></app-poll>
   </div>
   <div class="container poll-details">
-    <app-poll-vote></app-poll-vote>
+    <app-poll-vote
+      *ngIf="activePoll"
+      [voted]="activePoll.voted"
+      [options]="activePoll.options"
+      [question]="activePoll.question"
+      [results]="activePoll.results"
+    ></app-poll-vote>
   </div>
 </div>
 

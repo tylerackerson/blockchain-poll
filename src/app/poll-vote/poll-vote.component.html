@@ -1,15 +1,17 @@
-<h3>Poll question title</h3>
+<h3>{{ title }}</h3>
 
-<form [formGroup]="voteForm" (ngSubmit)="submitForm()">
-    <div class="form-check" *ngFor="let opt of options; let i = index">
+<form *ngIf="!voted" [formGroup]="voteForm" (ngSubmit)="submitForm()">
+    <div class="form-check" *ngFor="let opt of options; let idx = index">
       <input
         type="radio"
-        [id]="i"
+        [id]="idx"
         class="form-check-input"
         formControlName="selected"
-        [value]="i">
-      <label [for]="i" class="form-check-label">{{ opt }}</label>
+        [value]="idx">
+      <label [for]="idx" class="form-check-label">{{ opt }}</label>
     </div>
 
     <button type="submit" class="btn btn-secondary mt-3" [disabled]="voteForm.invalid">Submit vote</button>
 </form>
+
+<div *ngIf="voted" id="poll-results"></div>
