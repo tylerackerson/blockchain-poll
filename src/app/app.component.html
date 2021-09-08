@@ -8,11 +8,11 @@
   <p class="lead text-muted">Powered by BlockChain™️</p>
 </section>
 
-<app-poll-create *ngIf="showForm"></app-poll-create>
+<app-poll-create *ngIf="showForm" (pollCreated)="handlePollCreate($event)"></app-poll-create>
 
 <div class="d-flex">
   <div class="container poll-list">
-    <app-poll *ngFor="let poll of polls"
+    <app-poll *ngFor="let poll of polls | async"
       [id]="poll.id"
       [question]="poll.question"
       [image]="poll.image"
@@ -24,10 +24,12 @@
   <div class="container poll-details">
     <app-poll-vote
       *ngIf="activePoll"
+      [id]="activePoll.id"
       [voted]="activePoll.voted"
       [options]="activePoll.options"
       [question]="activePoll.question"
       [results]="activePoll.results"
+      (pollVoted)="handlePollVote($event)"
     ></app-poll-vote>
   </div>
 </div>

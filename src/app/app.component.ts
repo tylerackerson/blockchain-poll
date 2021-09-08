@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Poll } from './types';
+import { PollService } from './poll-service/poll.service';
+import { Poll, PollForm, PollVote } from './types';
 
 @Component({
   selector: 'app-root',
@@ -10,22 +11,9 @@ export class AppComponent {
   showForm = false;
   activePoll: Poll = null;
 
-  polls: Poll[] = [{
-    id: 1,
-    question: 'Cats or dogs?',
-    image: 'https://images.pexels.com/photos/5745284/pexels-photo-5745284.jpeg',
-    options: ['cats', 'dogs'],
-    results: [1, 99],
-    voted: false,
-  },
-  {
-    id: 2,
-    question: 'Winter or summer?',
-    image: 'https://images.pexels.com/photos/7243200/pexels-photo-7243200.jpeg',
-    options: ['winter', 'summer'],
-    results: [1, 101],
-    voted: true,
-  }];
+  polls = this.ps.getPolls();
+
+  constructor(private ps: PollService) {}
 
   setActivePoll(poll: Poll) {
     this.activePoll = null;
@@ -33,5 +21,13 @@ export class AppComponent {
     setTimeout(() => {
       this.activePoll = poll;
     }, 100)
+  }
+
+  handlePollCreate(poll: PollForm) {
+    this.ps.createPoll(poll);
+  }
+
+  handlePollVote(vote: PollVote) {
+    this.ps.vote(vote)
   }
 }
