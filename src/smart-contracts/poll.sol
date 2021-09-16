@@ -19,6 +19,8 @@ contract PollContract {
     Poll[] private polls;
     mapping(address => Voter) private voters;
 
+    event PollCreated(uint256 _pollId);
+
     function createPoll(
         string memory _question,
         string memory _image,
@@ -38,6 +40,7 @@ contract PollContract {
         });
 
         polls.push(newPoll);
+        emit PollCreated(pollId);
     }
 
     function getPoll(uint256 _pollId)
@@ -68,5 +71,17 @@ contract PollContract {
         polls[_pollId].votes[_vote] += 1;
         voters[msg.sender].votedIds.push(_pollId);
         voters[msg.sender].votedMap[_pollId] = true;
+    }
+
+    function getVoter(address _id)
+        external
+        view
+        returns (address, uint256[] memory)
+    {
+        return (voters[_id].id, voters[_id].votedIds);
+    }
+
+    function getPollCount() external view returns (uint256) {
+        return polls.length;
     }
 }
