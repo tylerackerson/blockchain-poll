@@ -56,4 +56,17 @@ contract PollContract {
         Poll memory poll = polls[_pollId];
         return (poll.id, poll.question, poll.image, poll.votes, poll.options);
     }
+
+    function vote(uint256 _pollId, uint256 _vote) external {
+        require(_pollId < polls.length, "Poll does not exist");
+        require(_vote < polls[_pollId].options.length, "Invalid vote");
+        require(
+            voters[msg.sender].votedMap[_pollId] == false,
+            "You already voted"
+        );
+
+        polls[_pollId].votes[_vote] += 1;
+        voters[msg.sender].votedIds.push(_pollId);
+        voters[msg.sender].votedMap[_pollId] = true;
+    }
 }
