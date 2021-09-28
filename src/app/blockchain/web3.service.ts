@@ -25,4 +25,21 @@ export class Web3Service {
       console.warn('Metamask not found. Install or enable it.');
     }
   }
+
+  async getAccount(): Promise<string> {
+    return this.web3.eth.getAccounts().then((accounts) => accounts[0] || '')
+  }
+
+  async executeTransaction(fnName: string, ...args: any[]): Promise<void> {
+    const acct = await this.getAccount();
+
+    this.contract
+      .methods[fnName](...args)
+      .send( { from: acct })
+
+    /** Examples:
+     - executeTransaction("createPoll", 1, 'http://', [0, 2, 4])
+     - executeTransaction("vote", 1, 2)
+     */
+  }
 }
