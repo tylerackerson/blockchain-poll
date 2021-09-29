@@ -17,6 +17,6 @@ export interface PollVote {
 
 export interface Voter {
   id: string // 093xJSHGSNAHNE2
-  voted: number // [12]
+  voted: number[] // [12]
 }
 
