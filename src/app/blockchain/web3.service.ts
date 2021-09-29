@@ -11,23 +11,27 @@ declare var window: any;
 export class Web3Service {
   private web3: Web3;
   private contract: Contract;
-  private contractAddress = '0x5C208334Cb499DC7D8D9d4f0eCdE353bb5Dbe3f5';
+  private contractAddress = '0xdA4062E4dA76A1d7B588693DEE762F9CBd133C06';
 
   constructor() {
     if (window.web3) {
       this.web3 = new Web3(window.ethereum);
-      this.contract = new this.web3.eth.Contract(contractAbi, this.contractAddress);
+      this.contract = new this.web3.eth.Contract(
+        contractAbi,
+        this.contractAddress
+      );
 
       window.ethereum.enable().catch((err) => {
         console.log(err);
       });
+      console.info('Metamask found and enabled.');
     } else {
       console.warn('Metamask not found. Install or enable it.');
     }
   }
 
   async getAccount(): Promise<string> {
-    return this.web3.eth.getAccounts().then((accounts) => accounts[0] || '')
+    return this.web3.eth.getAccounts().then((accounts) => accounts[0] || '');
   }
 
   async executeTransaction(fnName: string, ...args: any[]): Promise<void> {
@@ -43,7 +47,7 @@ export class Web3Service {
      */
   }
 
-  async call(fnName: string, ...args: any[]): Promise<void> {
+  async call(fnName: string, ...args: any[]): Promise<any> {
     const acct = await this.getAccount();
 
     return this.contract
