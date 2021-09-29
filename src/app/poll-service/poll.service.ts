@@ -11,7 +11,10 @@ import { fromAscii } from 'web3-utils';
 export class PollService {
   constructor(private web3: Web3Service) {}
 
-  getPolls(): Observable<Poll[]> {
+  async getPolls() {
+    const totalPolls = await this.web3.call("getPollCount");
+    console.log(totalPolls);
+
     return of([{
       id: 1,
       question: 'Cats or dogs?',

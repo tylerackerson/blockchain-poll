@@ -35,11 +35,24 @@ export class Web3Service {
 
     this.contract
       .methods[fnName](...args)
-      .send( { from: acct })
+      .send({ from: acct })
 
     /** Examples:
      - executeTransaction("createPoll", 1, 'http://', [0, 2, 4])
      - executeTransaction("vote", 1, 2)
+     */
+  }
+
+  async call(fnName: string, ...args: any[]): Promise<void> {
+    const acct = await this.getAccount();
+
+    return this.contract
+      .methods[fnName](...args)
+      .call({ from: acct })
+
+    /** Example:
+     - call("getPolls")
+     - call("getVoter", 'asdf')
      */
   }
 }
