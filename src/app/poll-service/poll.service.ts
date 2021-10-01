@@ -64,4 +64,8 @@ export class PollService {
       voted: voter.voted.length && voter.voted.find((votedId) => votedId === parseInt(pollData[0])) != undefined
     }
   }
+
+  onEvent(name: string) {
+    return this.web3.onEvents(name);
+  }
 }

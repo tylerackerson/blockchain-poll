@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
+import { Observable } from 'rxjs';
 import Web3 from 'web3';
 import { Contract } from 'web3-eth-contract';
 
@@ -13,7 +14,7 @@ export class Web3Service {
   private contract: Contract;
   private contractAddress = '0xdA4062E4dA76A1d7B588693DEE762F9CBd133C06';
 
-  constructor() {
+  constructor(private zone: NgZone) {
     if (window.web3) {
       this.web3 = new Web3(window.ethereum);
       this.contract = new this.web3.eth.Contract(
@@ -58,5 +59,19 @@ export class Web3Service {
      - call("getPolls")
      - call("getVoter", 'asdf')
      */
+  }
+
+  onEvents(event: string) {
+    return new Observable((observer) => {
+      this.contract.events[event]().on('data', (data) => {
+        // must run inside an angular 'zone'
+        this.zone.run(() => {
+          observer.next({
+            event: data.event,
+            payload: data.returnValue
+          })
+        })
+      })
+    });
   }
 }
